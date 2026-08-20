@@ -21,7 +21,7 @@ This document tracks planned refinements and upcoming features for the project.
 
 - [ ] **Gradient Support**
   - Add support for Linear and Radial gradients for the foreground color.
-- [ ] **Distinct Eye Colors**
+- [x] **Distinct Eye Colors**
   - Add options to color the corner position patterns differently from the main dots.
 - [ ] **Export Options**
   - Allow higher DPI scaling for PNG exports.

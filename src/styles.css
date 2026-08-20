@@ -109,12 +109,12 @@ h2 {
 }
 
 h1 {
-  max-width: 10ch;
+  max-width: 16ch;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: clamp(3.8rem, 8vw, 8.75rem);
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 0.82;
-  text-transform: lowercase;
 }
 
 h2 {

@@ -75,6 +75,9 @@ export function resolveQRConfig(config: QRConfig): ResolvedQRConfig {
   const foreground = config.dot?.color ?? DEFAULTS.foreground;
   assertHexColor(foreground, "dot.color");
 
+  const finderColor = config.dot?.finderColor ?? foreground;
+  assertHexColor(finderColor, "dot.finderColor");
+
   if (shape === "custom") {
     if (!config.dot?.custom) {
       throw new Error("dot.custom is required when shape is custom");
@@ -119,6 +122,7 @@ export function resolveQRConfig(config: QRConfig): ResolvedQRConfig {
       shape: shape as DotShape,
       finderShape: (config.dot?.finderShape ?? shape) as DotShape,
       color: foreground,
+      finderColor: finderColor,
       custom: config.dot?.custom,
     },
     export: {

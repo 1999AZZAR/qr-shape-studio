@@ -65,6 +65,7 @@ export function App() {
   const [shape, setShape] = useState<DotShape>("rounded");
   const [finderShape, setFinderShape] = useState<DotShape>("square");
   const [foreground, setForeground] = useState("#111827");
+  const [finderColor, setFinderColor] = useState("#111827");
   const [backgroundMode, setBackgroundMode] = useState<QRBackground["type"]>("colored");
   const [backgroundColor, setBackgroundColor] = useState("#F8FAFC");
   const [size, setSize] = useState(1024);
@@ -98,6 +99,7 @@ export function App() {
     setShape("rounded");
     setFinderShape("square");
     setForeground("#111827");
+    setFinderColor("#111827");
     setBackgroundMode("colored");
     setBackgroundColor("#F8FAFC");
     setSize(1024);
@@ -147,6 +149,7 @@ export function App() {
         shape,
         finderShape,
         color: foreground,
+        finderColor,
         custom:
           shape === "custom"
             ? {
@@ -180,6 +183,7 @@ export function App() {
       customViewBox,
       debouncedData,
       errorCorrection,
+      finderColor,
       finderShape,
       foreground,
       logoBackgroundColor,
@@ -327,7 +331,7 @@ export function App() {
               </div>
             ) : null}
 
-            <div className="field-row">
+            <div className="field-row" style={{ gridTemplateColumns: '1fr 1fr' }}>
               <div className="field-group color-field">
                 <label htmlFor="foreground">Foreground</label>
                 <input
@@ -338,6 +342,19 @@ export function App() {
                 />
                 <code>{foreground}</code>
               </div>
+              <div className="field-group color-field">
+                <label htmlFor="finder-color">Eye color</label>
+                <input
+                  id="finder-color"
+                  type="color"
+                  value={finderColor}
+                  onChange={(event) => setFinderColor(event.target.value)}
+                />
+                <code>{finderColor}</code>
+              </div>
+            </div>
+
+            <div className="field-row" style={{ gridTemplateColumns: '1fr 1fr' }}>
               <div className="field-group">
                 <label htmlFor="size">Size</label>
                 <input

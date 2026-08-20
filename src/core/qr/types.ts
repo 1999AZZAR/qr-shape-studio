@@ -11,6 +11,7 @@ export interface QRDotConfig {
   shape?: DotShape;
   finderShape?: DotShape;
   color?: string;
+  finderColor?: string;
   custom?: CustomShape;
 }
 
@@ -52,6 +53,7 @@ export interface ResolvedQRConfig {
     shape: DotShape;
     finderShape: DotShape;
     color: string;
+    finderColor: string;
     custom?: CustomShape;
   };
   export: {

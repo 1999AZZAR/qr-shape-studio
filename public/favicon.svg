@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="24" fill="#111827" />
+  <!-- Top Left Eye -->
+  <rect x="18" y="18" width="28" height="28" rx="8" fill="none" stroke="#F8FAFC" stroke-width="6"/>
+  <rect x="25" y="25" width="14" height="14" rx="4" fill="#F8FAFC"/>
+  <!-- Top Right Eye -->
+  <rect x="54" y="18" width="28" height="28" rx="8" fill="none" stroke="#F8FAFC" stroke-width="6"/>
+  <rect x="61" y="25" width="14" height="14" rx="4" fill="#F8FAFC"/>
+  <!-- Bottom Left Eye -->
+  <rect x="18" y="54" width="28" height="28" rx="8" fill="none" stroke="#F8FAFC" stroke-width="6"/>
+  <rect x="25" y="61" width="14" height="14" rx="4" fill="#F8FAFC"/>
+  <!-- Bottom Right Dot -->
+  <circle cx="68" cy="68" r="14" fill="#b21f24" />
+</svg>

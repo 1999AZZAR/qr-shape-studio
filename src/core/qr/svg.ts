@@ -57,7 +57,8 @@ export function renderQRCodeSvg(modules: boolean[][], config: ResolvedQRConfig):
     parts.push(`<rect x="0" y="0" width="${size}" height="${size}" fill="${escapeXml(background.color)}"/>`);
   }
 
-  parts.push(`<g fill="${escapeXml(config.dot.color)}">`);
+  const mainDots: string[] = [];
+  const finderDots: string[] = [];
 
   for (let row = 0; row < moduleCount; row += 1) {
     for (let column = 0; column < moduleCount; column += 1) {
@@ -71,19 +72,28 @@ export function renderQRCodeSvg(modules: boolean[][], config: ResolvedQRConfig):
         (row >= moduleCount - 7 && column < 7);
 
       const shapeToUse = isFinderPattern ? config.dot.finderShape : config.dot.shape;
-
-      parts.push(
-        renderModule(
-          shapeToUse,
-          offset + column * moduleSize,
-          offset + row * moduleSize,
-          moduleSize,
-          config.dot.custom,
-        ),
+      const dotSvg = renderModule(
+        shapeToUse,
+        offset + column * moduleSize,
+        offset + row * moduleSize,
+        moduleSize,
+        config.dot.custom,
       );
+
+      if (isFinderPattern) {
+        finderDots.push(dotSvg);
+      } else {
+        mainDots.push(dotSvg);
+      }
     }
   }
 
+  parts.push(`<g fill="${escapeXml(config.dot.color)}">`);
+  parts.push(mainDots.join(""));
+  parts.push("</g>");
+
+  parts.push(`<g fill="${escapeXml(config.dot.finderColor)}">`);
+  parts.push(finderDots.join(""));
   parts.push("</g>");
 
   if (config.logo) {
