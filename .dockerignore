@@ -1,0 +1,9 @@
+node_modules
+dist
+.git
+*.log
+memory.db
+memory.db-journal
+docs
+outputs
+work
