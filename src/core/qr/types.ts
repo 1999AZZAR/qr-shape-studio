@@ -9,6 +9,7 @@ export interface CustomShape {
 
 export interface QRDotConfig {
   shape?: DotShape;
+  finderShape?: DotShape;
   color?: string;
   custom?: CustomShape;
 }
@@ -33,6 +34,7 @@ export interface QRLogoConfig {
   sizeRatio?: number;
   paddingRatio?: number;
   backgroundColor?: string;
+  showPlate?: boolean;
 }
 
 export interface QRConfig {
@@ -48,6 +50,7 @@ export interface ResolvedQRConfig {
   errorCorrection: ErrorCorrection;
   dot: {
     shape: DotShape;
+    finderShape: DotShape;
     color: string;
     custom?: CustomShape;
   };

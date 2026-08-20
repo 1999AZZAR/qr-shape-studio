@@ -65,9 +65,16 @@ export function renderQRCodeSvg(modules: boolean[][], config: ResolvedQRConfig):
         continue;
       }
 
+      const isFinderPattern =
+        (row < 7 && column < 7) ||
+        (row < 7 && column >= moduleCount - 7) ||
+        (row >= moduleCount - 7 && column < 7);
+
+      const shapeToUse = isFinderPattern ? config.dot.finderShape : config.dot.shape;
+
       parts.push(
         renderModule(
-          config.dot.shape,
+          shapeToUse,
           offset + column * moduleSize,
           offset + row * moduleSize,
           moduleSize,
@@ -87,8 +94,13 @@ export function renderQRCodeSvg(modules: boolean[][], config: ResolvedQRConfig):
     const logoPosition = (size - logoSize) / 2;
     const logoRadius = logoPlateSize * 0.08;
 
+    if (config.logo.showPlate) {
+      parts.push(
+        `<rect x="${logoPlatePosition}" y="${logoPlatePosition}" width="${logoPlateSize}" height="${logoPlateSize}" rx="${logoRadius}" ry="${logoRadius}" fill="${escapeXml(config.logo.backgroundColor)}"/>`
+      );
+    }
+
     parts.push(
-      `<rect x="${logoPlatePosition}" y="${logoPlatePosition}" width="${logoPlateSize}" height="${logoPlateSize}" rx="${logoRadius}" ry="${logoRadius}" fill="${escapeXml(config.logo.backgroundColor)}"/>`,
       `<image href="${escapeXml(config.logo.src)}" x="${logoPosition}" y="${logoPosition}" width="${logoSize}" height="${logoSize}" preserveAspectRatio="xMidYMid meet"/>`,
     );
   }

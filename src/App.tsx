@@ -63,6 +63,7 @@ export function App() {
   const [data, setData] = useState("https://example.com/qr-shape-studio");
   const [errorCorrection, setErrorCorrection] = useState<ErrorCorrection>("H");
   const [shape, setShape] = useState<DotShape>("rounded");
+  const [finderShape, setFinderShape] = useState<DotShape>("square");
   const [foreground, setForeground] = useState("#111827");
   const [backgroundMode, setBackgroundMode] = useState<QRBackground["type"]>("colored");
   const [backgroundColor, setBackgroundColor] = useState("#F8FAFC");
@@ -75,15 +76,27 @@ export function App() {
   const [logoSizeRatio, setLogoSizeRatio] = useState(20);
   const [logoPaddingRatio, setLogoPaddingRatio] = useState(28);
   const [logoBackgroundColor, setLogoBackgroundColor] = useState("#FFFFFF");
+  const [logoShowPlate, setLogoShowPlate] = useState(true);
   const [svg, setSvg] = useState("");
   const [modules, setModules] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [logoError, setLogoError] = useState<string | null>(null);
 
+  // Debounce the QR data input to prevent stuttering on long inputs
+  const [debouncedData, setDebouncedData] = useState(data);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedData(data);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [data]);
+
   const resetSettings = () => {
     setData("https://example.com/qr-shape-studio");
+    setDebouncedData("https://example.com/qr-shape-studio");
     setErrorCorrection("H");
     setShape("rounded");
+    setFinderShape("square");
     setForeground("#111827");
     setBackgroundMode("colored");
     setBackgroundColor("#F8FAFC");
@@ -96,6 +109,7 @@ export function App() {
     setLogoSizeRatio(20);
     setLogoPaddingRatio(28);
     setLogoBackgroundColor("#FFFFFF");
+    setLogoShowPlate(true);
     setLogoError(null);
   };
 
@@ -127,10 +141,11 @@ export function App() {
 
   const qrConfig = useMemo(
     () => ({
-      data,
+      data: debouncedData,
       errorCorrection,
       dot: {
         shape,
+        finderShape,
         color: foreground,
         custom:
           shape === "custom"
@@ -154,6 +169,7 @@ export function App() {
             sizeRatio: logoSizeRatio / 100,
             paddingRatio: logoPaddingRatio / 100,
             backgroundColor: logoBackgroundColor,
+            showPlate: logoShowPlate,
           }
         : undefined,
     }),
@@ -162,11 +178,13 @@ export function App() {
       backgroundMode,
       customPath,
       customViewBox,
-      data,
+      debouncedData,
       errorCorrection,
+      finderShape,
       foreground,
       logoBackgroundColor,
       logoPaddingRatio,
+      logoShowPlate,
       logoSizeRatio,
       logoSrc,
       margin,
@@ -257,6 +275,24 @@ export function App() {
                     className={shape === option.value ? "shape-card active" : "shape-card"}
                     key={option.value}
                     onClick={() => setShape(option.value)}
+                    type="button"
+                  >
+                    <span className={`shape-swatch ${option.value}`} aria-hidden="true" />
+                    <span>{option.label}</span>
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset className="field-group">
+              <legend>Eye shape (corners)</legend>
+              <div className="shape-grid">
+                {DOT_SHAPES.filter(opt => opt.value !== 'custom').map((option) => (
+                  <button
+                    aria-pressed={finderShape === option.value}
+                    className={finderShape === option.value ? "shape-card active" : "shape-card"}
+                    key={option.value}
+                    onClick={() => setFinderShape(option.value)}
                     type="button"
                   >
                     <span className={`shape-swatch ${option.value}`} aria-hidden="true" />
@@ -409,16 +445,29 @@ export function App() {
                       />
                       <code>{logoPaddingRatio}%</code>
                     </div>
-                    <div className="field-group color-field">
-                      <label htmlFor="logo-background">Logo plate</label>
-                      <input
-                        id="logo-background"
-                        type="color"
-                        value={logoBackgroundColor}
-                        onChange={(event) => setLogoBackgroundColor(event.target.value)}
-                      />
-                      <code>{logoBackgroundColor}</code>
+                    <div className="field-row">
+                      <div className="field-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '8px' }}>
+                        <input
+                          id="logo-show-plate"
+                          type="checkbox"
+                          checked={logoShowPlate}
+                          onChange={(event) => setLogoShowPlate(event.target.checked)}
+                        />
+                        <label htmlFor="logo-show-plate" style={{ margin: 0 }}>Show plate</label>
+                      </div>
                     </div>
+                    {logoShowPlate && (
+                      <div className="field-group color-field">
+                        <label htmlFor="logo-background">Logo plate</label>
+                        <input
+                          id="logo-background"
+                          type="color"
+                          value={logoBackgroundColor}
+                          onChange={(event) => setLogoBackgroundColor(event.target.value)}
+                        />
+                        <code>{logoBackgroundColor}</code>
+                      </div>
+                    )}
                   </div>
                   <button
                     className="secondary-button"

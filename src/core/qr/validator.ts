@@ -95,6 +95,7 @@ export function resolveQRConfig(config: QRConfig): ResolvedQRConfig {
         sizeRatio: config.logo.sizeRatio ?? DEFAULTS.logoSizeRatio,
         paddingRatio: config.logo.paddingRatio ?? DEFAULTS.logoPaddingRatio,
         backgroundColor: config.logo.backgroundColor ?? DEFAULTS.logoBackground,
+        showPlate: config.logo.showPlate ?? true,
       }
     : undefined;
 
@@ -116,6 +117,7 @@ export function resolveQRConfig(config: QRConfig): ResolvedQRConfig {
     errorCorrection,
     dot: {
       shape: shape as DotShape,
+      finderShape: (config.dot?.finderShape ?? shape) as DotShape,
       color: foreground,
       custom: config.dot?.custom,
     },
