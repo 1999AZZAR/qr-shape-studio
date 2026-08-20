@@ -552,14 +552,13 @@ pre {
   .layout {
     display: flex;
     flex-direction: column-reverse;
+    align-items: stretch;
   }
 
   .preview-panel {
     min-height: auto;
   }
-}
 
-@media (max-width: 620px) {
   .app-shell {
     padding: var(--space-4);
   }
