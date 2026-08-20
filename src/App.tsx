@@ -1,4 +1,4 @@
-import { Download, FileCode2, ImagePlus, RefreshCw, X } from "lucide-react";
+import { Download, FileCode2, ImagePlus, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import {
   type DotShape,
@@ -92,28 +92,6 @@ export function App() {
     return () => clearTimeout(handler);
   }, [data]);
 
-  const resetSettings = () => {
-    setData("https://glassgallery.my.id");
-    setDebouncedData("https://glassgallery.my.id");
-    setErrorCorrection("H");
-    setShape("rounded");
-    setFinderShape("square");
-    setForeground("#111827");
-    setFinderColor("#111827");
-    setBackgroundMode("colored");
-    setBackgroundColor("#F8FAFC");
-    setSize(1024);
-    setMargin(4);
-    setCustomPath(CUSTOM_PRESET.path);
-    setCustomViewBox(CUSTOM_PRESET.viewBox);
-    setLogoSrc("");
-    setLogoName("");
-    setLogoSizeRatio(20);
-    setLogoPaddingRatio(28);
-    setLogoBackgroundColor("#FFFFFF");
-    setLogoShowPlate(true);
-    setLogoError(null);
-  };
 
   const handleLogoUpload = (file: File | undefined) => {
     if (!file) {
@@ -229,9 +207,6 @@ export function App() {
             <p className="eyebrow">Workspace / QR Generator</p>
             <h1 id="page-title">QR Shape Studio</h1>
           </div>
-          <button className="icon-button" type="button" aria-label="Reset settings" onClick={resetSettings}>
-            <RefreshCw size={18} aria-hidden="true" />
-          </button>
         </header>
 
         <div className="layout">
