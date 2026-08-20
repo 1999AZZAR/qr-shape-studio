@@ -60,7 +60,7 @@ function downloadPng(svg: string, size: number): void {
 }
 
 export function App() {
-  const [data, setData] = useState("https://example.com/qr-shape-studio");
+  const [data, setData] = useState("https://glassgallery.my.id");
   const [errorCorrection, setErrorCorrection] = useState<ErrorCorrection>("H");
   const [shape, setShape] = useState<DotShape>("rounded");
   const [finderShape, setFinderShape] = useState<DotShape>("square");
@@ -93,8 +93,8 @@ export function App() {
   }, [data]);
 
   const resetSettings = () => {
-    setData("https://example.com/qr-shape-studio");
-    setDebouncedData("https://example.com/qr-shape-studio");
+    setData("https://glassgallery.my.id");
+    setDebouncedData("https://glassgallery.my.id");
     setErrorCorrection("H");
     setShape("rounded");
     setFinderShape("square");
@@ -331,7 +331,7 @@ export function App() {
               </div>
             ) : null}
 
-            <div className="field-row" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            <div className="field-row">
               <div className="field-group color-field">
                 <label htmlFor="foreground">Foreground</label>
                 <input
@@ -354,7 +354,7 @@ export function App() {
               </div>
             </div>
 
-            <div className="field-row" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            <div className="field-row">
               <div className="field-group">
                 <label htmlFor="size">Size</label>
                 <input
